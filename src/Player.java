@@ -1,4 +1,9 @@
-package PACKAGE_NAME;
+import constants.Drawable;
 
-public class Player {
+public class Player implements Drawable {
+
+    @Override
+    public void draw() {
+
+    }
 }
