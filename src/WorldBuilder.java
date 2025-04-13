@@ -28,7 +28,9 @@ public class WorldBuilder implements Drawable {
                 grid[i][j] = floorTiles.BLANK;
             }
         }
-        grid[1][2] = floorTiles.DIRT;
+        for(int i = 0;i<80;i++){
+            grid[i][2] = floorTiles.DIRT;
+        }
     }
 
     @Override

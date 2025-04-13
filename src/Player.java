@@ -1,14 +1,16 @@
 import constants.Drawable;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 
-public class Player implements Drawable {
+public class Player implements Drawable{
 
     private String name;
-    private int xPos = 0;
-    private int yPos = 0;
+    private int xPos;
+    private int yPos;
     private int size = 10;
-    private int speed = 1;
+    private final int delta = 1;
+    Ellipse2D character;
 
     Player(String name, int xPos, int yPos) {
         this.name = name;
@@ -19,13 +21,29 @@ public class Player implements Drawable {
 
     @Override
     public void draw(Graphics g) {
+        System.out.println(xPos);
+        System.out.println("Repainted");
         Graphics2D g2 = (Graphics2D) g;
+        character = new Ellipse2D.Float(xPos- (float) size /2, yPos- (float) size / 2, size, size);
         g2.setColor(Color.RED);
-        g2.fillOval(xPos, yPos, size, size);
+        g2.fill(character);
+        g2.draw(character);
     }
 
-    public void moveUp(){
-        xPos-=speed;
+    public void up(){
+        yPos-= delta;
+    }
+
+    public void right(){
+        xPos+= delta;
+    }
+
+    public void down(){
+        yPos+= delta;
+    }
+
+    public void left(){
+        xPos-= delta;
     }
 
     public int getxPos() {

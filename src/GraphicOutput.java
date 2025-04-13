@@ -2,37 +2,37 @@ import constants.Drawable;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 
 public class GraphicOutput {
     JFrame mainFrame;
+    MainPanel panel;
+    Player player;
 
-    public GraphicOutput() {
+    public GraphicOutput(Player player) {
+        this.player = player;
+    }
+
+    public void createAndShowGUI() {
         mainFrame = new JFrame("My World");
-        prepareGUI();
-    }
+        panel = new MainPanel();
 
-    private void prepareGUI() {
-        mainFrame.setSize(800, 800);
+        mainFrame.setSize(800, 850);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        MainPanel panel = new MainPanel();
         mainFrame.add(panel);
+        mainFrame.pack();
         mainFrame.setVisible(true);
-        panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('k'),doSomething);
-        panel.getActionMap().put(doSomething,doSomething);
     }
 
-    Action doSomething = new AbstractAction() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("Es funktioniert");
+    public class MainPanel extends JPanel {
+
+
+        public MainPanel() {
+
         }
-    };
 
-    private class MainPanel extends JPanel {
-
-        MainPanel() {
-
+        public Dimension getPreferredSize() {
+            return new Dimension(500, 500);
         }
 
         @Override
