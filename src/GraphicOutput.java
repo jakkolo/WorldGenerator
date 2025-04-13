@@ -1,35 +1,38 @@
 import constants.Drawable;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.geom.*;
+import java.util.ArrayList;
 
-public class GraphicOutput extends Frame{
+public class GraphicOutput extends JFrame {
 
 
     public GraphicOutput(){
-        super("Java AWT Examples");
+        super("My World");
         prepareGUI();
     }
 
     private void prepareGUI(){
-        setSize(400,400);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent windowEvent){
-                System.exit(0);
-            }
-        });
+        super.setSize(500,500);
+        super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        MainPanel panel = new MainPanel();
+        super.add(panel);
     }
 
-    @Override
-    public void paint(Graphics g){
-        /*Rectangle2D shape = new Rectangle2D.Float();
-        shape.setFrame(100,150,200,100);
-        Graphics2D g2 = (Graphics2D)g;
-        g2.setColor(Color.blue);
-        g2.fill(shape);
-        g2.draw(shape);*/
-        //TODO Loop over all objects of an interface
+    //TODO Loop over all objects of an interface
+    private class MainPanel extends JPanel{
+
+        MainPanel(){
+
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            for(Drawable obj: Main.drawables){
+                obj.draw(g);
+            }
+        }
     }
 }
 
