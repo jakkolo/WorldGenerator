@@ -39,6 +39,7 @@ public class GraphicOutput {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             for (Drawable obj : Main.drawables) {
+                System.out.println(obj);//LOG
                 obj.draw(g);
             }
         }

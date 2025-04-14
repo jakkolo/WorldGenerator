@@ -9,7 +9,7 @@ public class Player implements Drawable{
     private int xPos;
     private int yPos;
     private int size = 10;
-    private final int delta = 1;
+    private final int delta = 2;
     Ellipse2D character;
 
     Player(String name, int xPos, int yPos) {
@@ -21,13 +21,13 @@ public class Player implements Drawable{
 
     @Override
     public void draw(Graphics g) {
-        System.out.println(xPos);
-        System.out.println("Repainted");
         Graphics2D g2 = (Graphics2D) g;
-        character = new Ellipse2D.Float(xPos- (float) size /2, yPos- (float) size / 2, size, size);
+        g2.setColor(Color.RED);
+        g2.fillOval((int) (xPos- (float) size /2), (int) (yPos- (float) size / 2), size, size);
+        /*character = new Ellipse2D.Float(xPos- (float) size /2, yPos- (float) size / 2, size, size);
         g2.setColor(Color.RED);
         g2.fill(character);
-        g2.draw(character);
+        g2.draw(character);*/
     }
 
     public void up(){
