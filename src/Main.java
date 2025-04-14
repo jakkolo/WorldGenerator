@@ -9,15 +9,13 @@ public class Main {
 
     public static void main(String[] args) {
 
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                WorldBuilder testWorld = new WorldBuilder();
-                Player player1 = new Player("player1", 100, 200);
-                GraphicOutput demo = new GraphicOutput(player1);
+        SwingUtilities.invokeLater(() -> {
+            WorldBuilder testWorld = new WorldBuilder();
+            Player player1 = new Player("player1", 100, 200);
+            GraphicOutput demo = new GraphicOutput(player1);
 
-                demo.createAndShowGUI();
-                InputController controlPlayer1 = new InputController(demo.panel, player1);
-            }
+            demo.createAndShowGUI();
+            InputController controlPlayer1 = new InputController(demo.panel, player1,24);
         });
     }
 }

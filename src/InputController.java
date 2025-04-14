@@ -1,55 +1,109 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
+import java.util.Map;
+import java.util.HashMap;
 
-public class InputController {
+public class InputController implements ActionListener{
     private final GraphicOutput.MainPanel panel;
     private final Player player;
 
-    InputController(GraphicOutput.MainPanel panel, Player player) {
+    private final static String PRESSED = "pressed ";
+    private final static String RELEASED = "released ";
+    private final Timer timer;
+    private final Map<String, String> pressedKeys = new HashMap<>();
+
+    InputController(GraphicOutput.MainPanel panel, Player player, int delay) {
         this.panel = panel;
         this.player = player;
+
+        timer = new Timer(delay, this);
+        timer.setInitialDelay(0);
+
         setupKeyBindings();
     }
 
     private void setupKeyBindings() {
+        addAction("A","moveLeft");
+        addAction("D","moveRight");
+        addAction("W","moveUp");
+        addAction("S","moveDown");
+    }
+
+    public void addAction(String keyStroke, String action)
+    {
+        //  Separate the key identifier from the modifiers of the KeyStroke
+
+        int offset = keyStroke.lastIndexOf(" ");
+        String key = offset == -1 ? keyStroke :  keyStroke.substring( offset + 1 );
+        String modifiers = keyStroke.replace(key, "");
+
+        //  Get the InputMap and ActionMap of the component
+
         InputMap inputMap = panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         ActionMap actionMap = panel.getActionMap();
 
-        inputMap.put(KeyStroke.getKeyStroke("A"), "moveLeft");
-        inputMap.put(KeyStroke.getKeyStroke("D"), "moveRight");
-        inputMap.put(KeyStroke.getKeyStroke("W"), "moveUp");
-        inputMap.put(KeyStroke.getKeyStroke("S"), "moveDown");
+        //  Create Action and add binding for the pressed key
 
-        actionMap.put("moveLeft", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                player.left();
-                panel.repaint();
-            }
-        });
+        Action pressedAction = new AnimationAction(key, action);
+        String pressedKey = modifiers + PRESSED + key;
+        KeyStroke pressedKeyStroke = KeyStroke.getKeyStroke(pressedKey);
+        inputMap.put(pressedKeyStroke, pressedKey);
+        actionMap.put(pressedKey, pressedAction);
 
-        actionMap.put("moveRight", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                player.right();
-                panel.repaint();
-            }
-        });
+        //  Create Action and add binding for the released key
 
-        actionMap.put("moveUp", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                player.up();
-                panel.repaint();
-            }
-        });
+        Action releasedAction = new AnimationAction(key, null);
+        String releasedKey = modifiers + RELEASED + key;
+        KeyStroke releasedKeyStroke = KeyStroke.getKeyStroke(releasedKey);
+        inputMap.put(releasedKeyStroke, releasedKey);
+        actionMap.put(releasedKey, releasedAction);
+    }
 
-        actionMap.put("moveDown", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                player.down();
-                panel.repaint();
-            }
-        });
+    private void handleKeyEvent(String key, String action)
+    {
+        //  Keep track of which keys are pressed
+
+        if (action == null)
+            pressedKeys.remove( key );
+        else
+            pressedKeys.put(key, action);
+
+        //  Start the Timer when the first key is pressed
+
+        if (pressedKeys.size() == 1)
+        {
+            timer.start();
+        }
+
+        //  Stop the Timer when all keys have been released
+
+        if (pressedKeys.isEmpty())
+        {
+            timer.stop();
+        }
+    }
+
+    private class AnimationAction extends AbstractAction implements ActionListener
+    {
+        private final String action;
+
+        public AnimationAction(String key, String action)
+        {
+            super(key);
+            this.action = action;
+        }
+
+        public void actionPerformed(ActionEvent e)
+        {
+            handleKeyEvent((String)getValue(NAME), action);
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        for(String action: pressedKeys.values()){
+            player.move(action);
+            panel.repaint();
+        }
     }
 }

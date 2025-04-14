@@ -1,7 +1,8 @@
 import constants.Drawable;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
+//import java.awt.geom.Ellipse2D;
+import java.util.Objects;
 
 public class Player implements Drawable{
 
@@ -9,14 +10,15 @@ public class Player implements Drawable{
     private int xPos;
     private int yPos;
     private int size = 10;
-    private final int delta = 2;
-    Ellipse2D character;
+    private final int delta;
+    //Ellipse2D character;
 
     Player(String name, int xPos, int yPos) {
         this.name = name;
         this.xPos = xPos;
         this.yPos = yPos;
         Main.drawables.add(this);
+        delta = 1;
     }
 
     @Override
@@ -30,20 +32,17 @@ public class Player implements Drawable{
         g2.draw(character);*/
     }
 
-    public void up(){
-        yPos-= delta;
-    }
+    public void move(String action){
+        if(Objects.equals(action, "moveLeft")){
+            xPos-=delta;
+        }else if(Objects.equals(action, "moveRight")){
+            xPos+=delta;
+        } else if (Objects.equals(action, "moveUp")) {
+            yPos-=delta;
+        } else if (Objects.equals(action, "moveDown")) {
+            yPos+=delta;
+        }
 
-    public void right(){
-        xPos+= delta;
-    }
-
-    public void down(){
-        yPos+= delta;
-    }
-
-    public void left(){
-        xPos-= delta;
     }
 
     public int getxPos() {
