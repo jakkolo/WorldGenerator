@@ -5,11 +5,11 @@ import java.awt.*;
 import java.util.Random;
 
 public class WorldBuilder implements Drawable {
-    private static final int RENDER_DISTANCE = 4;
-    private static final int TILE_SIZE = 5;
-    private static final int CHUNK_SIZE = 16;
+    static final int RENDER_DISTANCE = 3;
+    static final int TILE_SIZE = 2;
+    static final int CHUNK_SIZE = 16;
     private final int seed;
-    Chunk[][] grid = new Chunk[RENDER_DISTANCE * 2 + 1][RENDER_DISTANCE * 2 + 1];
+    Chunk[][] grid = new Chunk[20][20];
 
     WorldBuilder(int seed) {
         Main.drawables.add(this);
@@ -43,7 +43,7 @@ public class WorldBuilder implements Drawable {
         }
     }
 
-    private class Chunk {
+    public class Chunk {
 
         private final floorTiles[][] grid;
 
@@ -60,14 +60,16 @@ public class WorldBuilder implements Drawable {
         public void drawChunk(Graphics g) {
             Graphics2D g2 = (Graphics2D) g;
             //System.out.println(getChunkX() + " " + getChunkY());//LOG
-            for (int i = 0; i < CHUNK_SIZE; i++) {
-                for (int j = 0; j < CHUNK_SIZE; j++) {
-                    //System.out.println("i="+i+", j="+j+" "+((chunkX * CHUNK_SIZE*TILE_SIZE) + (i * TILE_SIZE)) + ", " + ((chunkY * CHUNK_SIZE*TILE_SIZE) + (j * TILE_SIZE)));//LOG
-                    g2.setColor(new Color(grid[i][j].color[0], grid[i][j].color[1], grid[i][j].color[2]));
-                    g2.fillRect((chunkX * CHUNK_SIZE * TILE_SIZE) + (i * TILE_SIZE),
-                            (chunkY * CHUNK_SIZE * TILE_SIZE) + (j * TILE_SIZE),
-                            TILE_SIZE,
-                            TILE_SIZE);
+            if (isInChunk()) {
+                for (int i = 0; i < CHUNK_SIZE; i++) {
+                    for (int j = 0; j < CHUNK_SIZE; j++) {
+                        //System.out.println("i="+i+", j="+j+" "+((chunkX * CHUNK_SIZE*TILE_SIZE) + (i * TILE_SIZE)) + ", " + ((chunkY * CHUNK_SIZE*TILE_SIZE) + (j * TILE_SIZE)));//LOG
+                        g2.setColor(new Color(grid[i][j].color[0], grid[i][j].color[1], grid[i][j].color[2]));
+                        g2.fillRect((chunkX * CHUNK_SIZE * TILE_SIZE) + (i * TILE_SIZE),
+                                (chunkY * CHUNK_SIZE * TILE_SIZE) + (j * TILE_SIZE),
+                                TILE_SIZE,
+                                TILE_SIZE);
+                    }
                 }
             }
         }
@@ -79,6 +81,10 @@ public class WorldBuilder implements Drawable {
                 }
             }
             grid[1][2] = floorTiles.GRASS;
+        }
+
+        private boolean isInChunk() {
+            return Main.player1.getChunkCoordinates().distance(new Point(chunkX, chunkY)) < RENDER_DISTANCE;
         }
 
         public int getChunkX() {

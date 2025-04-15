@@ -45,16 +45,16 @@ public class GraphicOutput {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             for (Drawable obj : Main.drawables) {
-                System.out.println(obj);//LOG
+                //System.out.println(obj);//LOG
                 obj.draw(g);
             }
             //TODO
             // - only for showing chunk borders
-            for (int x = 0; x < xWidth; x += 80) {
+            for (int x = 0; x < xWidth; x += 32) {
                 g.setColor(Color.blue);
                 g.drawLine(x, 0, x, yWidth);
             }
-            for (int y = 0; y < yWidth; y += 80) {
+            for (int y = 0; y < yWidth; y += 32) {
                 g.setColor(Color.blue);
                 g.drawLine(0, y, xWidth, y);
             }

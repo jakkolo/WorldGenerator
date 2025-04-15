@@ -1,6 +1,8 @@
 import constants.Drawable;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.Objects;
 
 public class Player implements Drawable {
@@ -10,14 +12,18 @@ public class Player implements Drawable {
     private int yPos;
     private int size = 10;
     private final int delta;
+
+    private final WorldBuilder world;
+
     //Ellipse2D character;
 
-    Player(String name, int xPos, int yPos) {
+    Player(String name, int xPos, int yPos, WorldBuilder World) {
         this.name = name;
         this.xPos = xPos;
         this.yPos = yPos;
         Main.drawables.add(this);
-        delta = 1;
+        delta = 2;
+        this.world = World;
     }
 
     @Override
@@ -42,6 +48,22 @@ public class Player implements Drawable {
             yPos += delta;
         }
 
+    }
+
+    public Point getChunkCoordinates() {
+        for (WorldBuilder.Chunk[] chunks : world.grid) {
+            for (WorldBuilder.Chunk chunk : chunks) {
+                Rectangle2D testing;
+                testing = new Rectangle2D.Float(chunk.getChunkX() * WorldBuilder.CHUNK_SIZE * WorldBuilder.TILE_SIZE,
+                        chunk.getChunkY() * WorldBuilder.CHUNK_SIZE * WorldBuilder.TILE_SIZE,
+                        WorldBuilder.CHUNK_SIZE * WorldBuilder.TILE_SIZE,
+                        WorldBuilder.CHUNK_SIZE * WorldBuilder.TILE_SIZE);
+                if (testing.contains(new Point2D.Float(xPos, yPos))) {
+                    return new Point(chunk.getChunkX(), chunk.getChunkY());
+                }
+            }
+        }
+        return null;
     }
 
     public int getxPos() {
