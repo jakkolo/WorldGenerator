@@ -7,9 +7,15 @@ public class GraphicOutput {
     JFrame mainFrame;
     MainPanel panel;
     Player player;
+    int xWidth;
+    int yWidth;
 
-    public GraphicOutput(Player player) {
+    public GraphicOutput(Player player, int screenWidthX, int screenWidthY) {
         this.player = player;
+        this.xWidth = screenWidthX;
+        this.yWidth = screenWidthY;
+        player.setxPos(screenWidthX / 2);
+        player.setyPos(screenWidthY / 2);
     }
 
     public void createAndShowGUI() {
@@ -18,6 +24,7 @@ public class GraphicOutput {
 
         mainFrame.setSize(800, 850);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setResizable(false);
         mainFrame.add(panel);
         mainFrame.pack();
         mainFrame.setVisible(true);
@@ -31,7 +38,7 @@ public class GraphicOutput {
         }
 
         public Dimension getPreferredSize() {
-            return new Dimension(500, 500);
+            return new Dimension(xWidth, yWidth);
         }
 
         @Override
@@ -40,6 +47,16 @@ public class GraphicOutput {
             for (Drawable obj : Main.drawables) {
                 System.out.println(obj);//LOG
                 obj.draw(g);
+            }
+            //TODO
+            // - only for showing chunk borders
+            for (int x = 0; x < xWidth; x += 80) {
+                g.setColor(Color.blue);
+                g.drawLine(x, 0, x, yWidth);
+            }
+            for (int y = 0; y < yWidth; y += 80) {
+                g.setColor(Color.blue);
+                g.drawLine(0, y, xWidth, y);
             }
         }
     }

@@ -1,10 +1,9 @@
 import constants.Drawable;
 
 import java.awt.*;
-//import java.awt.geom.Ellipse2D;
 import java.util.Objects;
 
-public class Player implements Drawable{
+public class Player implements Drawable {
 
     private String name;
     private int xPos;
@@ -25,22 +24,22 @@ public class Player implements Drawable{
     public void draw(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.RED);
-        g2.fillOval((int) (xPos- (float) size /2), (int) (yPos- (float) size / 2), size, size);
+        g2.fillOval((int) (xPos - (float) size / 2), (int) (yPos - (float) size / 2), size, size);
         /*character = new Ellipse2D.Float(xPos- (float) size /2, yPos- (float) size / 2, size, size);
         g2.setColor(Color.RED);
         g2.fill(character);
         g2.draw(character);*/
     }
 
-    public void move(String action){
-        if(Objects.equals(action, "moveLeft")){
-            xPos-=delta;
-        }else if(Objects.equals(action, "moveRight")){
-            xPos+=delta;
+    public void move(String action) {
+        if (Objects.equals(action, "moveLeft")) {
+            xPos -= delta;
+        } else if (Objects.equals(action, "moveRight")) {
+            xPos += delta;
         } else if (Objects.equals(action, "moveUp")) {
-            yPos-=delta;
+            yPos -= delta;
         } else if (Objects.equals(action, "moveDown")) {
-            yPos+=delta;
+            yPos += delta;
         }
 
     }

@@ -11,11 +11,11 @@ public class Main {
 
         SwingUtilities.invokeLater(() -> {
             WorldBuilder testWorld = new WorldBuilder();
-            Player player1 = new Player("player1", 100, 200);
-            GraphicOutput demo = new GraphicOutput(player1);
+            Player player1 = new Player("player1", 250, 250);
+            GraphicOutput demo = new GraphicOutput(player1, 720, 720);
 
             demo.createAndShowGUI();
-            InputController controlPlayer1 = new InputController(demo.panel, player1,24);
+            InputController controlPlayer1 = new InputController(demo.panel, player1, 24);
         });
     }
 }

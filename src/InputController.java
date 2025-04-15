@@ -1,9 +1,10 @@
 import javax.swing.*;
-import java.awt.event.*;
-import java.util.Map;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.Map;
 
-public class InputController implements ActionListener{
+public class InputController implements ActionListener {
     private final GraphicOutput.MainPanel panel;
     private final Player player;
 
@@ -23,18 +24,17 @@ public class InputController implements ActionListener{
     }
 
     private void setupKeyBindings() {
-        addAction("A","moveLeft");
-        addAction("D","moveRight");
-        addAction("W","moveUp");
-        addAction("S","moveDown");
+        addAction("A", "moveLeft");
+        addAction("D", "moveRight");
+        addAction("W", "moveUp");
+        addAction("S", "moveDown");
     }
 
-    public void addAction(String keyStroke, String action)
-    {
+    public void addAction(String keyStroke, String action) {
         //  Separate the key identifier from the modifiers of the KeyStroke
 
         int offset = keyStroke.lastIndexOf(" ");
-        String key = offset == -1 ? keyStroke :  keyStroke.substring( offset + 1 );
+        String key = offset == -1 ? keyStroke : keyStroke.substring(offset + 1);
         String modifiers = keyStroke.replace(key, "");
 
         //  Get the InputMap and ActionMap of the component
@@ -59,49 +59,43 @@ public class InputController implements ActionListener{
         actionMap.put(releasedKey, releasedAction);
     }
 
-    private void handleKeyEvent(String key, String action)
-    {
+    private void handleKeyEvent(String key, String action) {
         //  Keep track of which keys are pressed
 
         if (action == null)
-            pressedKeys.remove( key );
+            pressedKeys.remove(key);
         else
             pressedKeys.put(key, action);
 
         //  Start the Timer when the first key is pressed
 
-        if (pressedKeys.size() == 1)
-        {
+        if (pressedKeys.size() == 1) {
             timer.start();
         }
 
         //  Stop the Timer when all keys have been released
 
-        if (pressedKeys.isEmpty())
-        {
+        if (pressedKeys.isEmpty()) {
             timer.stop();
         }
     }
 
-    private class AnimationAction extends AbstractAction implements ActionListener
-    {
+    private class AnimationAction extends AbstractAction implements ActionListener {
         private final String action;
 
-        public AnimationAction(String key, String action)
-        {
+        public AnimationAction(String key, String action) {
             super(key);
             this.action = action;
         }
 
-        public void actionPerformed(ActionEvent e)
-        {
-            handleKeyEvent((String)getValue(NAME), action);
+        public void actionPerformed(ActionEvent e) {
+            handleKeyEvent((String) getValue(NAME), action);
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        for(String action: pressedKeys.values()){
+        for (String action : pressedKeys.values()) {
             player.move(action);
             panel.repaint();
         }
