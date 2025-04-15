@@ -7,6 +7,8 @@ import java.util.Objects;
 
 public class Player implements Drawable {
 
+    //FIXME
+    // -make the player character unable to leave the window
     private String name;
     private int xPos;
     private int yPos;
