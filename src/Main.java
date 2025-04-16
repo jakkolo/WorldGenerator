@@ -7,7 +7,7 @@ public class Main {
     static ArrayList<Drawable> drawables = new ArrayList<>();
     //static ArrayList<RespondsToKeyboard> respondingToKeyboard = new ArrayList<>();
     static Player player1;
-    static final int screenWidthX =640;
+    static final int screenWidthX = 640;
     static final int screenWidthY = 640;
     static GraphicOutput demo;
 

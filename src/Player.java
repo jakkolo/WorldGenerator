@@ -40,13 +40,13 @@ public class Player implements Drawable {
     }
 
     public void move(String action) {
-        if (Objects.equals(action, "moveLeft")&& Main.demo.panel.contains(xPos-delta,yPos)) {
+        if (Objects.equals(action, "moveLeft") && Main.demo.panel.contains(xPos - delta, yPos)) {
             xPos -= delta;
-        } else if (Objects.equals(action, "moveRight")&& Main.demo.panel.contains(xPos+delta,yPos)) {
+        } else if (Objects.equals(action, "moveRight") && Main.demo.panel.contains(xPos + delta, yPos)) {
             xPos += delta;
-        } else if (Objects.equals(action, "moveUp")&& Main.demo.panel.contains(xPos,yPos-delta)) {
+        } else if (Objects.equals(action, "moveUp") && Main.demo.panel.contains(xPos, yPos - delta)) {
             yPos -= delta;
-        } else if (Objects.equals(action, "moveDown")&& Main.demo.panel.contains(xPos,yPos+delta)) {
+        } else if (Objects.equals(action, "moveDown") && Main.demo.panel.contains(xPos, yPos + delta)) {
             yPos += delta;
         }
 
