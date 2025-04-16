@@ -27,6 +27,7 @@ public class GraphicOutput {
         mainFrame.setResizable(false);
         mainFrame.add(panel);
         mainFrame.pack();
+        mainFrame.setLocationRelativeTo(null);
         mainFrame.setVisible(true);
     }
 

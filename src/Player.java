@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Player implements Drawable {
 
     //FIXME
-    // -make the player character unable to leave the window
+    // -reduce movement speed when going diagonally
     private String name;
     private int xPos;
     private int yPos;
@@ -40,13 +40,13 @@ public class Player implements Drawable {
     }
 
     public void move(String action) {
-        if (Objects.equals(action, "moveLeft")) {
+        if (Objects.equals(action, "moveLeft")&& Main.demo.panel.contains(xPos-delta,yPos)) {
             xPos -= delta;
-        } else if (Objects.equals(action, "moveRight")) {
+        } else if (Objects.equals(action, "moveRight")&& Main.demo.panel.contains(xPos+delta,yPos)) {
             xPos += delta;
-        } else if (Objects.equals(action, "moveUp")) {
+        } else if (Objects.equals(action, "moveUp")&& Main.demo.panel.contains(xPos,yPos-delta)) {
             yPos -= delta;
-        } else if (Objects.equals(action, "moveDown")) {
+        } else if (Objects.equals(action, "moveDown")&& Main.demo.panel.contains(xPos,yPos+delta)) {
             yPos += delta;
         }
 
