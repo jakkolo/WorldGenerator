@@ -47,8 +47,7 @@ public class WorldBuilder implements Drawable {
 
         private final floorTiles[][] grid;
 
-        private int chunkX;
-        private int chunkY;
+        private int chunkX, chunkY;
 
         Chunk(int chunkX, int chunkY) {
             this.chunkX = chunkX;
