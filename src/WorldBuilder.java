@@ -47,7 +47,7 @@ public class WorldBuilder implements Drawable {
                 int worldX = chunkX*CHUNK_SIZE+x;
                 int worldY = chunkY*CHUNK_SIZE+y;
                 float noiseVal = noise.GetNoise(worldX,worldY);
-                if (noiseVal < -0.6) {
+                if (noiseVal < -0.5) {
                     chunk.grid[x][y] = floorTiles.WATER;
                 } else if (noiseVal < 0.4) {
                     chunk.grid[x][y] = floorTiles.GRASS;
@@ -85,7 +85,7 @@ public class WorldBuilder implements Drawable {
         public void drawChunk(Graphics g) {
             Graphics2D g2 = (Graphics2D) g;
             //System.out.println(getChunkX() + " " + getChunkY());//LOG
-//            if (isInChunk()) {
+            if (isInChunk()) {
                 for (int i = 0; i < CHUNK_SIZE; i++) {
                     for (int j = 0; j < CHUNK_SIZE; j++) {
                         //System.out.println("i="+i+", j="+j+" "+((chunkX * CHUNK_SIZE*TILE_SIZE) + (i * TILE_SIZE)) + ", " + ((chunkY * CHUNK_SIZE*TILE_SIZE) + (j * TILE_SIZE)));//LOG
@@ -96,7 +96,7 @@ public class WorldBuilder implements Drawable {
                                 TILE_SIZE);
                     }
                 }
-  //          }
+            }
         }
 
         private boolean isInChunk() {
